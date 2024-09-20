@@ -1,4 +1,4 @@
-import { source } from "@/app/source";
+import { source } from "~/app/source";
 import type { Metadata } from "next";
 import {
   DocsPage,
