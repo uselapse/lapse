@@ -1,8 +1,6 @@
 import Link from "next/link";
-import { SiSharex } from "react-icons/si";
 import { FaFaceKiss } from "react-icons/fa6";
 import {
-  BiSolidCustomize,
   BiSolidFileImage,
   BiSolidImage,
 } from "react-icons/bi";
@@ -12,7 +10,7 @@ import Footer from "~/components/footer";
 export default function HomePage() {
   return (
     <main
-      className="min-h-screen bg-[#09090B] text-white flex flex-col"
+      className="min-h-screen bg-white dark:bg-[#09090B] text-black dark:text-white flex flex-col"
       style={{
         backgroundImage:
           'url("https://pouch.jumpshare.com/preview/la3OERxfFo_rZu3dvXHwoBCwUpM4uJKnvFQgKwBMUmvf9u16uXRVLUP09iYy5sQpnlH0egcO4MjoQU0iHUykOYlAoSIcgeNbJzXdbxJJuts")',
@@ -25,16 +23,16 @@ export default function HomePage() {
             Fluidly store your
             <br />
             images with a{" "}
-            <span className="inline-block bg-gradient-to-b from-sky-400 to-sky-900 px-2 rounded">
+            <span className="inline-block bg-gradient-to-b from-sky-400 to-sky-600 dark:from-sky-400 dark:to-sky-900 px-2 rounded text-white">
               fast
             </span>{" "}
             and{" "}
-            <span className="inline-block bg-gradient-to-b from-purple-400 to-purple-900 px-2 rounded">
+            <span className="inline-block bg-gradient-to-b from-purple-400 to-purple-600 dark:from-purple-400 dark:to-purple-900 px-2 rounded text-white">
               swift
             </span>{" "}
             service.
           </h1>
-          <p className="text-lg text-gray-400 mb-8 mx-auto max-w-2xl">
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 mx-auto max-w-2xl">
             lapse provides a high-quality image CDN, featuring a variety of
             image scanning and manipulation options, including{" "}
             <BiSolidImage className="inline-block mr-1" />
@@ -46,7 +44,7 @@ export default function HomePage() {
           <Link href="/docs">
             <Button
               size="lg"
-              className="bg-white text-black font-bold hover:bg-gray-200 border border-gray-500"
+              className="bg-black text-white dark:bg-white dark:text-black font-bold hover:bg-gray-800 dark:hover:bg-gray-200 border border-gray-500"
             >
               Get Started
               <svg
@@ -68,7 +66,7 @@ export default function HomePage() {
           <Link href="/docs">
             <Button
               size="lg"
-              className="bg-black text-white font-bold hover:bg-zinc-900 border border-gray-800 ml-4"
+              className="bg-white text-black dark:bg-black dark:text-white font-bold hover:bg-gray-100 dark:hover:bg-zinc-900 border border-gray-300 dark:border-gray-800 ml-4"
             >
               Documentation
             </Button>
