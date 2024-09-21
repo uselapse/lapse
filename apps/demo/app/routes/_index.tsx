@@ -1,138 +1,195 @@
-import type { MetaFunction } from "@remix-run/node";
+import { useState, useRef, useEffect } from "react";
+import type { ActionFunction } from "@remix-run/node";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+  const image = formData.get("image") as File;
+
+  const body = new FormData();
+  body.append("image", image);
+
+  const response = await fetch("http://localhost:3000/upload", {
+    method: "POST",
+    body,
+  });
+
+  const result = await response.json();
+  return result;
 };
 
 export default function Index() {
+  const actionData = useActionData<{ url: string; originalSize: number; newSize: number; processingTime: number }>();
+  const navigation = useNavigation();
+  const [preview, setPreview] = useState<string | null>(null);
+  const [sliderValue, setSliderValue] = useState(50);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const dropZoneRef = useRef<HTMLLabelElement>(null);
+
+  const isUploading = navigation.state === "submitting";
+
+  useEffect(() => {
+    if (!isUploading) {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }, [isUploading]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      processFile(file);
+    } else {
+      setPreview(null);
+      setImageDimensions({ width: 0, height: 0 });
+    }
+  };
+
+  const processFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result as string);
+      const img = new Image();
+      img.onload = () => {
+        setImageDimensions({ width: img.width, height: img.height });
+      };
+      img.src = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      if (fileInputRef.current) {
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInputRef.current.files = dataTransfer.files;
+      }
+      processFile(file);
+    }
+  };
+
+  const handleMouseDown = () => {
+    const startDrag = (e: MouseEvent) => {
+      if (sliderRef.current) {
+        const rect = sliderRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const newValue = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        setSliderValue(newValue);
+      }
+    };
+
+    const stopDrag = () => {
+      document.removeEventListener('mousemove', startDrag);
+      document.removeEventListener('mouseup', stopDrag);
+    };
+
+    document.addEventListener('mousemove', startDrag);
+    document.addEventListener('mouseup', stopDrag);
+  };
+
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-16">
-        <header className="flex flex-col items-center gap-9">
-          <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
-            Welcome to <span className="sr-only">Remix</span>
-          </h1>
-          <div className="h-[144px] w-[434px]">
-            <img
-              src="/logo-light.png"
-              alt="Remix"
-              className="block w-full dark:hidden"
-            />
-            <img
-              src="/logo-dark.png"
-              alt="Remix"
-              className="hidden w-full dark:block"
-            />
+    <main className="min-h-screen bg-white flex items-center justify-center md:p-4">
+      <section className="bg-white rounded-lg shadow-xl p-2 md:p-8 max-w-2xl w-full min-h-screen md:min-h-fit md:border-gray-300 md:border">
+        <h1 className="text-3xl font-bold text-black mb-8 text-center">Image Optimizer Using Lapse</h1>
+        <Form method="post" encType="multipart/form-data" className="space-y-6">
+          <div className="flex items-center justify-center w-full">
+            <label
+              htmlFor="image"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              ref={dropZoneRef}
+            >
+              <span className="sr-only">Upload an image</span>
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                </svg>
+                <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+              </div>
+              <input id="image" type="file" name="image" accept="image/*" required className="hidden" onChange={handleFileChange} ref={fileInputRef} />
+            </label>
           </div>
-        </header>
-        <nav className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
-          <p className="leading-6 text-gray-700 dark:text-gray-200">
-            What&apos;s next?
-          </p>
-          <ul>
-            {resources.map(({ href, text, icon }) => (
-              <li key={href}>
-                <a
-                  className="group flex items-center gap-3 self-stretch p-3 leading-normal text-blue-700 hover:underline dark:text-blue-500"
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {icon}
-                  {text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-    </div>
+
+          {preview && (
+            <div className="relative mt-4 flex justify-center">
+              <img
+                src={preview}
+                alt="Preview"
+                className="max-w-full max-h-32 object-contain rounded-lg"
+                style={{ width: 'auto', height: 'auto' }}
+              />
+              {isUploading && (
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
+                  <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white"></div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <button type="submit" disabled={isUploading} className="w-full px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors disabled:opacity-50">
+            {isUploading ? "Optimizing..." : "Optimize Image"}
+          </button>
+        </Form>
+
+        {actionData?.url && (
+          <div className="mt-8 space-y-6">
+            <div className="relative" style={{ width: `${imageDimensions.width}px`, maxWidth: '100%', margin: '0 auto' }} ref={sliderRef}>
+              <img src={preview as string} alt="Original" className="w-full h-auto object-contain" />
+              <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                <img src={actionData.url} alt="Optimized" className="absolute top-0 left-0 w-full h-full object-contain" style={{ clipPath: `inset(0 ${100 - sliderValue}% 0 0)` }} />
+              </div>
+              <div
+                role="slider"
+                aria-valuenow={sliderValue}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Image comparison slider"
+                tabIndex={0}
+                className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+                style={{ left: `${sliderValue}%`, boxShadow: '0 0 0 1px #d1d5db', userSelect: 'none' }}
+                onMouseDown={handleMouseDown}
+                onKeyDown={(e) => {
+                  if (e.key === 'ArrowLeft') {
+                    setSliderValue(Math.max(0, sliderValue - 1));
+                  } else if (e.key === 'ArrowRight') {
+                    setSliderValue(Math.min(100, sliderValue + 1));
+                  }
+                }}
+              >
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-2 border-gray-300"></div>
+              </div>
+              <div className="absolute bottom-4 left-4 bg-white px-2 py-1 rounded text-sm text-black">Original</div>
+              <div className="absolute bottom-4 right-4 bg-white px-2 py-1 rounded text-sm text-black">Optimized</div>
+            </div>
+
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <h2 className="text-lg font-semibold mb-2 text-black">Optimization Results</h2>
+              <p className="text-sm text-gray-600">Original size: {(actionData.originalSize / 1024).toFixed(2)} KB</p>
+              <p className="text-sm text-gray-600">New size: {(actionData.newSize / 1024).toFixed(2)} KB</p>
+              <p className="text-sm text-gray-600">Size reduction: {((1 - actionData.newSize / actionData.originalSize) * 100).toFixed(2)}%</p>
+            </div>
+
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">Optimized image URL:</p>
+              <a href={actionData.url} target="_blank" rel="noopener noreferrer" className="text-black hover:underline break-all">
+                {actionData.url}
+              </a>
+            </div>
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
-
-const resources = [
-  {
-    href: "https://remix.run/start/quickstart",
-    text: "Quick Start (5 min)",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
-      >
-        <path
-          d="M8.51851 12.0741L7.92592 18L15.6296 9.7037L11.4815 7.33333L12.0741 2L4.37036 10.2963L8.51851 12.0741Z"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    href: "https://remix.run/start/tutorial",
-    text: "Tutorial (30 min)",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
-      >
-        <path
-          d="M4.561 12.749L3.15503 14.1549M3.00811 8.99944H1.01978M3.15503 3.84489L4.561 5.2508M8.3107 1.70923L8.3107 3.69749M13.4655 3.84489L12.0595 5.2508M18.1868 17.0974L16.635 18.6491C16.4636 18.8205 16.1858 18.8205 16.0144 18.6491L13.568 16.2028C13.383 16.0178 13.0784 16.0347 12.915 16.239L11.2697 18.2956C11.047 18.5739 10.6029 18.4847 10.505 18.142L7.85215 8.85711C7.75756 8.52603 8.06365 8.21994 8.39472 8.31453L17.6796 10.9673C18.0223 11.0653 18.1115 11.5094 17.8332 11.7321L15.7766 13.3773C15.5723 13.5408 15.5554 13.8454 15.7404 14.0304L18.1868 16.4767C18.3582 16.6481 18.3582 16.926 18.1868 17.0974Z"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    href: "https://remix.run/docs",
-    text: "Remix Docs",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-        className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
-      >
-        <path
-          d="M9.99981 10.0751V9.99992M17.4688 17.4688C15.889 19.0485 11.2645 16.9853 7.13958 12.8604C3.01467 8.73546 0.951405 4.11091 2.53116 2.53116C4.11091 0.951405 8.73546 3.01467 12.8604 7.13958C16.9853 11.2645 19.0485 15.889 17.4688 17.4688ZM2.53132 17.4688C0.951566 15.8891 3.01483 11.2645 7.13974 7.13963C11.2647 3.01471 15.8892 0.951453 17.469 2.53121C19.0487 4.11096 16.9854 8.73551 12.8605 12.8604C8.73562 16.9853 4.11107 19.0486 2.53132 17.4688Z"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    href: "https://rmx.as/discord",
-    text: "Join Discord",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="20"
-        viewBox="0 0 24 20"
-        fill="none"
-        className="stroke-gray-600 group-hover:stroke-current dark:stroke-gray-300"
-      >
-        <path
-          d="M15.0686 1.25995L14.5477 1.17423L14.2913 1.63578C14.1754 1.84439 14.0545 2.08275 13.9422 2.31963C12.6461 2.16488 11.3406 2.16505 10.0445 2.32014C9.92822 2.08178 9.80478 1.84975 9.67412 1.62413L9.41449 1.17584L8.90333 1.25995C7.33547 1.51794 5.80717 1.99419 4.37748 2.66939L4.19 2.75793L4.07461 2.93019C1.23864 7.16437 0.46302 11.3053 0.838165 15.3924L0.868838 15.7266L1.13844 15.9264C2.81818 17.1714 4.68053 18.1233 6.68582 18.719L7.18892 18.8684L7.50166 18.4469C7.96179 17.8268 8.36504 17.1824 8.709 16.4944L8.71099 16.4904C10.8645 17.0471 13.128 17.0485 15.2821 16.4947C15.6261 17.1826 16.0293 17.8269 16.4892 18.4469L16.805 18.8725L17.3116 18.717C19.3056 18.105 21.1876 17.1751 22.8559 15.9238L23.1224 15.724L23.1528 15.3923C23.5873 10.6524 22.3579 6.53306 19.8947 2.90714L19.7759 2.73227L19.5833 2.64518C18.1437 1.99439 16.6386 1.51826 15.0686 1.25995ZM16.6074 10.7755L16.6074 10.7756C16.5934 11.6409 16.0212 12.1444 15.4783 12.1444C14.9297 12.1444 14.3493 11.6173 14.3493 10.7877C14.3493 9.94885 14.9378 9.41192 15.4783 9.41192C16.0471 9.41192 16.6209 9.93851 16.6074 10.7755ZM8.49373 12.1444C7.94513 12.1444 7.36471 11.6173 7.36471 10.7877C7.36471 9.94885 7.95323 9.41192 8.49373 9.41192C9.06038 9.41192 9.63892 9.93712 9.6417 10.7815C9.62517 11.6239 9.05462 12.1444 8.49373 12.1444Z"
-          strokeWidth="1.5"
-        />
-      </svg>
-    ),
-  },
-];
