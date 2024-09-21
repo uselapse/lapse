@@ -41,14 +41,19 @@ export default function Index() {
   }>();
   const navigation = useNavigation();
   const [preview, setPreview] = useState<string | null>(null);
-  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
   const isUploading = navigation.state === "submitting";
 
   return (
     <main className="min-h-screen bg-white flex items-center justify-center md:p-4">
       <section className="bg-white rounded-lg shadow-xl p-2 md:p-8 max-w-2xl w-full min-h-screen md:min-h-fit md:border-gray-300 md:border">
-        <h1 className="text-3xl font-bold text-black mb-8 text-center">Image Optimizer Using Lapse</h1>
+        <h1 className="text-3xl font-bold text-black mb-8 text-center">
+          Image Optimizer Using Lapse
+        </h1>
         <Form method="post" encType="multipart/form-data" className="space-y-6">
           <UploadDropzone
             preview={preview}
@@ -59,7 +64,9 @@ export default function Index() {
         </Form>
 
         {actionData?.error && (
-          <div className="mt-4 text-red-600 text-center">{actionData.error}</div>
+          <div className="mt-4 text-red-600 text-center">
+            {actionData.error}
+          </div>
         )}
 
         {actionData?.url && (

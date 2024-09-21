@@ -7,10 +7,12 @@ import fs from "fs/promises";
 
 const app = new Elysia();
 
-app.use(staticPlugin({
-  assets: "public",
-  prefix: "/public"
-}));
+app.use(
+  staticPlugin({
+    assets: "public",
+    prefix: "/public",
+  }),
+);
 
 app.post("/upload", async ({ body }: { body: { image: File } }) => {
   const startTime = performance.now();
@@ -21,7 +23,9 @@ app.post("/upload", async ({ body }: { body: { image: File } }) => {
     const image = body.image;
     const buffer = await image.arrayBuffer();
     const bufferEndTime = performance.now();
-    console.log(`Image converted to buffer in ${(bufferEndTime - bufferStartTime).toFixed(5)}s`);
+    console.log(
+      `Image converted to buffer in ${(bufferEndTime - bufferStartTime).toFixed(5)}s`,
+    );
 
     const filename = `${uuidv4()}.webp`;
     const publicDir = path.join(process.cwd(), "public");
@@ -39,9 +43,15 @@ app.post("/upload", async ({ body }: { body: { image: File } }) => {
     await fs.writeFile(outputPath, processedImage);
     const newSize = processedImage.length;
     const processingEndTime = performance.now();
-    console.log(`Image processed and saved in ${((processingEndTime - processingStartTime) / 1000).toFixed(5)}s`);
-    console.log(`File size shrunk from ${originalSize} bytes to ${newSize} bytes`);
-    console.log(`Compression ratio: ${((1 - newSize / originalSize) * 100).toFixed(2)}%`);
+    console.log(
+      `Image processed and saved in ${((processingEndTime - processingStartTime) / 1000).toFixed(5)}s`,
+    );
+    console.log(
+      `File size shrunk from ${originalSize} bytes to ${newSize} bytes`,
+    );
+    console.log(
+      `Compression ratio: ${((1 - newSize / originalSize) * 100).toFixed(2)}%`,
+    );
     console.log(`Bytes saved: ${originalSize - newSize}`);
     console.log("----------------------------------\n");
 
@@ -49,7 +59,9 @@ app.post("/upload", async ({ body }: { body: { image: File } }) => {
     console.log(`Returning image URL: ${url}`);
 
     const endTime = performance.now();
-    console.log(`Total processing time: ${((endTime - startTime) / 1000).toFixed(5)}s`);
+    console.log(
+      `Total processing time: ${((endTime - startTime) / 1000).toFixed(5)}s`,
+    );
 
     return { url, originalSize, newSize, processingTime: endTime - startTime };
   } catch (error) {
