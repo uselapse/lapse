@@ -19,7 +19,7 @@ export default function HomePage() {
         backgroundSize: "cover",
       }}
     >
-      <main className="flex-grow flex items-center justify-center px-4">
+      <main className="h-[calc(100vh-55px)] flex-grow flex items-center justify-center px-4">
         <div className="max-w-3xl text-center">
           <h1 className="text-5xl sm:text-6xl font-bold leading-tight mb-6">
             Fluidly store your
