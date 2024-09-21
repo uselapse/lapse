@@ -13,17 +13,32 @@ export const action: ActionFunction = async ({ request }) => {
   const body = new FormData();
   body.append("image", image);
 
-  const response = await fetch("http://localhost:3000/upload", {
-    method: "POST",
-    body,
-  });
+  try {
+    const response = await fetch("http://localhost:3000/upload", {
+      method: "POST",
+      body,
+    });
 
-  const result = await response.json();
-  return result;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error processing image:", error);
+    return { error: "Failed to process image. Please try again." };
+  }
 };
 
 export default function Index() {
-  const actionData = useActionData<{ url: string; originalSize: number; newSize: number; processingTime: number }>();
+  const actionData = useActionData<{
+    url: string;
+    originalSize: number;
+    newSize: number;
+    processingTime: number;
+    error?: string;
+  }>();
   const navigation = useNavigation();
   const [preview, setPreview] = useState<string | null>(null);
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
@@ -42,6 +57,10 @@ export default function Index() {
             isUploading={isUploading}
           />
         </Form>
+
+        {actionData?.error && (
+          <div className="mt-4 text-red-600 text-center">{actionData.error}</div>
+        )}
 
         {actionData?.url && (
           <div className="mt-8 space-y-6">
