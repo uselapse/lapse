@@ -9,7 +9,7 @@ This Turborepo includes the following packages/apps:
 - `docs`: a [Fumadocs](https://fumadocs.vercel.app/) [Next.js](https://nextjs.org/) app
 - `web`: a [Remix](https://remix.run/) app
 - `demo`: another [Remix](https://remix.run/) app
-- `www`: an [Astro](https://astro.build/) app
+- `www`: an [Next.js](https://nextjs.org/) app
 - `api`: an [Elysia](https://elysiajs.com/) app
 - `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
