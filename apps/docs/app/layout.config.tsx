@@ -1,5 +1,4 @@
 import { type HomeLayoutProps } from "fumadocs-ui/home-layout";
-import Link from "next/link";
 
 /**
  * Shared layout configurations
