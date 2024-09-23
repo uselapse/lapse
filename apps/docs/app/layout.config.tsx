@@ -40,22 +40,19 @@ export const baseOptions: HomeLayoutProps = {
   links: [
     {
       text: "Pricing",
-      url: "https://guide.lapse.host/integrations",
+      url: "/pricing",
+    },
+    {
+      text: "Documentation",
+      url: "/docs",
+    },
+    {
+      text: "Changelog",
+      url: "/changelog",
     },
     {
       text: "Feedback",
       url: "https://lapse.canny.io/",
     },
-    {
-      text: "Documentation",
-      url: "/docs",
-      active: "nested-url",
-    },
-    {
-      text: "Sign In",
-      url: "#",
-      type: "button",
-    },
   ],
-  githubUrl: "https://github.com/uselapse",
 };
