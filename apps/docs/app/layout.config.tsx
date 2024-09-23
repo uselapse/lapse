@@ -51,5 +51,11 @@ export const baseOptions: HomeLayoutProps = {
       url: "/docs",
       active: "nested-url",
     },
+    {
+      text: "Sign In",
+      url: "#",
+      type: "button",
+    },
   ],
+  githubUrl: "https://github.com/uselapse",
 };
