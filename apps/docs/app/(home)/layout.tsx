@@ -10,3 +10,8 @@ export default function Layout({
 }): React.ReactElement {
   return <HomeLayout {...baseOptions}>{children}</HomeLayout>;
 }
+
+export const metadata: Metadata = {
+  title: "lapse",
+  description: "Store your images using a comprehensive array of advanced image processing capabilities."
+}

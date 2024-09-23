@@ -17,8 +17,3 @@ export default function Layout({ children }: { children: ReactNode }) {
     </html>
   );
 }
-
-export const metadata: Metadata = {
-  title: "lapse",
-  description: "Store your images using a comprehensive array of advanced image processing capabilities."
-}
