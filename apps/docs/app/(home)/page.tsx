@@ -16,7 +16,7 @@ export default function HomePage() {
       className="min-h-screen bg-white dark:bg-[#09090B] text-black dark:text-white flex flex-col"
       style={{
         backgroundImage:
-          'url("https://dxeul8wagn2zr.cloudfront.net/g7jsha%2Fpreview%2F60955795%2Fmain_large.png?response-content-disposition=inline%3Bfilename%3D%22main_large.png%22%3B&response-content-type=image%2Fpng&Expires=1727126719&Signature=bIIkpE9o7LkxY7kOgWfabJyz6wZZo4b9NHdfXKPMyDivYFG~Up9rHtxuG8CXWwOJUki2qOEa10-Uu2qcQl25j~TcRB5yTJurfRS4RgLoOAEqUJN4bnBOz4ciMcO7mPs9ptB3t9rbK0ob4Tmf-O2sG6QOGhczBILVgw2NmNutOMEFF005hQQe6JX2up-lkyTWu526pwLq~ttvHcyLXjrnJs1nBkujPUd-X9Ya4vkizwvoV68wDRTvhMpvV99~GKzRSx0eEU2q5S0UBZS01wLWg7TumQf3OIDHsdR1pb1uIvTxkfrqWB~DFVA5r~zXlPQRfbmtqmnXU2IqPYL3KK6HiA__&Key-Pair-Id=APKAJT5WQLLEOADKLHBQ")',
+          'url("https://pouch.jumpshare.com/preview/uA-E8fhxKcUbT0v2mR_9aF0gM8oKWN70RcDe5YGBdpZ82p-47megFvVDtPAflV2WWTaL3XmYcBRZN6oJhgDchEESWOvN1SzecdONZ0pk730")',
         backgroundSize: "cover",
       }}
     >
@@ -78,16 +78,17 @@ export default function HomePage() {
               size="lg"
               className="bg-white text-black dark:bg-black dark:text-white font-medium hover:bg-gray-100 dark:hover:bg-zinc-900 border border-gray-300 dark:border-gray-800 ml-4 text-left"
             >
-              Read the docs
+              Documentation
             </Button>
           </Link>
         </div>
-        <div className="text-lmt-8">
-            <h2 className="text-3xl font-medium text-right mb-4">Integrate in a matter of minutes</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
-                text
-              </p>
-          </div>
+        <div className="flex flex-col items-end">
+          <img src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nfGVufDB8fDB8fHww" alt="dog" className="ml-4 max-w-[600px] max-h-[600px] rounded-lg" />
+        <p className="text-sm text-right text-gray-500 mt-2">
+          image processed ans saved in 0.02348s
+          <br />compression ratio: 66.58%
+          <br />bytes saved: 12,924 on 19,412</p>
+        </div>
       </main>
       <Footer />
     </main>

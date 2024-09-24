@@ -7,7 +7,7 @@ import { BsOpencollective } from "react-icons/bs";
 
 export default function Footer() {
   return (
-    <footer className="bg-black py-6 mt-auto border-t border-gray-800">
+    <footer className="bg-[#0A0A0A] py-6 mt-auto border-t border-gray-800">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <div className="flex items-center justify-center space-x-2 mb-4">
           <Link href="/" className="flex items-center space-x-2">
@@ -56,7 +56,7 @@ export default function Footer() {
           <span className="text-gray-700">•</span>
           <Link
             target="_blank"
-            href="#"
+            href="https://security.lapse.uno/"
             className="text-gray-400 hover:text-gray-300"
           >
             Security
@@ -64,10 +64,10 @@ export default function Footer() {
         </div>
         <div className="flex justify-center space-x-3 mb-4">
           <Link
-            href="mailto:email@lapse.host"
+            href="mailto:email@lapse.uno"
             className="text-gray-400 hover:text-gray-300"
           >
-            email@lapse.sh
+            email@lapse.uno
           </Link>
         </div>
         <div className="flex justify-center space-x-4 mb-4">
