@@ -36,11 +36,11 @@ export default function Footer() {
             </svg>
           </Link>
         </div>
-        <div className="flex justify-center space-x-3 mb-4 text-white dark:text-black">
+        <div className="flex justify-center space-x-3 mb-4">
           <Link
             target="_blank"
             href="/status"
-            className="text-gray-400 hover:text-gray-300 white:"
+            className="text-gray-400 hover:text-gray-300"
           >
             Status
           </Link>
