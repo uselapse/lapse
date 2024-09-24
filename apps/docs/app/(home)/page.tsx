@@ -12,9 +12,7 @@ import Footer from "~/components/footer";
 
 export default function HomePage() {
   return (
-    <main
-      className="min-h-screen bg-white dark:bg-[#09090B] text-black dark:text-white flex flex-col dark:bg-[url('https://pouch.jumpshare.com/preview/uA-E8fhxKcUbT0v2mR_9aF0gM8oKWN70RcDe5YGBdpZ82p-47megFvVDtPAflV2WWTaL3XmYcBRZN6oJhgDchEESWOvN1SzecdONZ0pk730')] dark:bg-cover"
-    >
+    <main className="min-h-screen bg-white bg-gradient-to-t from-[#F1F1FF] to-[#FFFFFF] text-black dark:text-white flex flex-col dark:bg-gradient-to-t dark:from-[#101023] dark:to-[#000000]">
       <main className="h-[calc(100vh-55px)] flex-grow flex items-center justify-center px-4">
         <div className="max-w-3xl text-left">
           <h1 className="text-5xl sm:text-6xl font-medium leading-tight mb-6">
@@ -35,10 +33,10 @@ export default function HomePage() {
             {" "}High-quality image CDN
             <br />
             <FaImages className="inline-block mr-0.5" />
-            {" "}Image scanning & manipulation options
+            {" "}Scanning & manipulation options
             <br />
             <FaBolt className="inline-block mr-0.5" />
-            {" "}Easily remove background from image
+            {" "}Easily remove background
             <br />
             <FaCompressAlt className="inline-block mr-0.5" />
             {" "}Image compression
@@ -46,7 +44,7 @@ export default function HomePage() {
             <FaFaceKiss className="inline-block mr-0.5" />
             {" "}All done on our servers
           </p>
-          <Link href="/login">
+          <Link href="https://app.lapse.uno/">
             <Button
               size="lg"
               className="bg-black text-white dark:bg-white dark:text-black font-medium hover:bg-gray-800 dark:hover:bg-gray-200 border border-gray-500 text-left"

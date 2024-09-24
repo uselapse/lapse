@@ -1,3 +1,11 @@
+import {
+  Book,
+  CircleDollarSign,
+  Star,
+  Scroll,
+  Send
+} from "lucide-react";
+import { FaDiscord } from "react-icons/fa6";
 import { type HomeLayoutProps } from "fumadocs-ui/home-layout";
 
 /**
@@ -39,20 +47,47 @@ export const baseOptions: HomeLayoutProps = {
   },
   links: [
     {
+      icon: <CircleDollarSign />,
       text: "Pricing",
       url: "/pricing",
     },
     {
+      icon: <Book />,
       text: "Documentation",
       url: "/docs",
+      active: 'nested-url',
     },
     {
-      text: "Changelog",
-      url: "/changelog",
+      type: 'menu',
+      text: 'Resources',
+      items: [
+        {
+          icon: <Send />,
+          text: "Contact Us",
+          url: "mailto:email@lapse.uno",
+        },
+        {
+          icon: <Scroll />,
+          text: "Changelog",
+          url: "/changelog",
+        },
+        {
+          icon: <Star />,
+          text: "Feedback",
+          url: "/feedback",
+        },
+        {
+          icon: <FaDiscord />,
+          text: "Discord",
+          url: "/discord",
+        },
+      ],
     },
     {
-      text: "Feedback",
-      url: "https://lapse.canny.io/",
+      type: 'button',
+      text: 'Login',
+      url: 'https://app.lapse.uno/',
+      secondary: true,
     },
   ],
 };
