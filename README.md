@@ -51,7 +51,7 @@ By default, Turborepo will cache locally. To enable Remote Caching you will need
 
 ```
 cd lapse
-npx turbo login
+bunx turbo login
 ```
 
 This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
