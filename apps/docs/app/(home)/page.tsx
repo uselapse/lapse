@@ -13,12 +13,7 @@ import Footer from "~/components/footer";
 export default function HomePage() {
   return (
     <main
-      className="min-h-screen bg-white dark:bg-[#09090B] text-black dark:text-white flex flex-col"
-      style={{
-        backgroundImage:
-          'url("https://pouch.jumpshare.com/preview/uA-E8fhxKcUbT0v2mR_9aF0gM8oKWN70RcDe5YGBdpZ82p-47megFvVDtPAflV2WWTaL3XmYcBRZN6oJhgDchEESWOvN1SzecdONZ0pk730")',
-        backgroundSize: "cover",
-      }}
+      className="min-h-screen bg-white dark:bg-[#09090B] text-black dark:text-white flex flex-col dark:bg-[url('https://pouch.jumpshare.com/preview/uA-E8fhxKcUbT0v2mR_9aF0gM8oKWN70RcDe5YGBdpZ82p-47megFvVDtPAflV2WWTaL3XmYcBRZN6oJhgDchEESWOvN1SzecdONZ0pk730')] dark:bg-cover"
     >
       <main className="h-[calc(100vh-55px)] flex-grow flex items-center justify-center px-4">
         <div className="max-w-3xl text-left">
@@ -26,11 +21,11 @@ export default function HomePage() {
             Store images with
             <br />
             a{" "}
-            <span className="inline-block bg-gradient-to-b from-sky-400 to-sky-600 dark:from-sky-400 dark:to-sky-900 px-2 rounded text-white">
+            <span className="inline-block bg-gradient-to-b from-sky-400 to-sky-600 dark:from-sky-400 dark:to-sky-900 px-2 rounded text-white dark:text-white">
               fast
             </span>{" "}
             and{" "}
-            <span className="inline-block bg-gradient-to-b from-purple-400 to-purple-600 dark:from-purple-400 dark:to-purple-900 px-2 rounded text-white">
+            <span className="inline-block bg-gradient-to-b from-purple-400 to-purple-600 dark:from-purple-400 dark:to-purple-900 px-2 rounded text-white dark:text-white">
               smooth
             </span>{" "}
             experience
@@ -84,10 +79,10 @@ export default function HomePage() {
         </div>
         <div className="flex flex-col items-end">
           <img src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nfGVufDB8fDB8fHww" alt="dog" className="ml-4 max-w-[600px] max-h-[600px] rounded-lg" />
-        <p className="text-sm text-right text-gray-500 mt-2">
-          image processed ans saved in 0.02348s
-          <br />compression ratio: 66.58%
-          <br />bytes saved: 12,924 on 19,412</p>
+          <p className="text-sm text-right text-gray-500 mt-2">
+            image processed and saved in 0.02348s
+            <br />compression ratio: 66.58%
+            <br />bytes saved: 12,924 on 19,412</p>
         </div>
       </main>
       <Footer />
