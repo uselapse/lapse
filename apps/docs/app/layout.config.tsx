@@ -6,6 +6,7 @@ import {
   Send
 } from "lucide-react";
 import { FaDiscord } from "react-icons/fa6";
+import { BsOpencollective } from "react-icons/bs";
 import { type HomeLayoutProps } from "fumadocs-ui/home-layout";
 
 /**
@@ -80,6 +81,11 @@ export const baseOptions: HomeLayoutProps = {
           icon: <FaDiscord />,
           text: "Discord",
           url: "/discord",
+        },
+        {
+          icon: <BsOpencollective />,
+          text: "Open Collective",
+          url: "/opencollective",
         },
       ],
     },
