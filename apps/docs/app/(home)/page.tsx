@@ -29,20 +29,9 @@ export default function HomePage() {
             experience
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl text-left">
-            <FaImage className="inline-block mr-0.5" />
-            {" "}High-quality image CDN
-            <br />
-            <FaImages className="inline-block mr-0.5" />
-            {" "}Scanning & manipulation options
-            <br />
-            <FaBolt className="inline-block mr-0.5" />
-            {" "}Easily remove background
-            <br />
-            <FaCompressAlt className="inline-block mr-0.5" />
-            {" "}Image compression
-            <br />
-            <FaFaceKiss className="inline-block mr-0.5" />
-            {" "}All done on our servers
+            Lapse delivers a complete array of advanced image processing<br />
+            capabilities, as perfectly complemented by the facility to<br />
+            host your images on our servers.
           </p>
           <Link href="https://app.lapse.uno/">
             <Button
@@ -76,12 +65,14 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="flex flex-col items-end">
-          <img src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nfGVufDB8fDB8fHww" alt="dog" className="ml-4 max-w-[600px] max-h-[600px] rounded-lg" />
+          <img src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9nfGVufDB8fDB8fHww" alt="dog" className="ml-4 max-w-[550px] max-h-[550px] rounded-lg" />
           <p className="text-sm text-right text-gray-500 mt-2">
-            image processed and saved in 0.02348s
-            <br />compression ratio: 66.58%
-            <br />bytes saved: 12,924 on 19,412</p>
+            image processed and saved in 0.02348s<br />
+            compression ratio: 66.58%<br />
+            bytes saved: 12,924 on 19,412
+          </p>
         </div>
+
       </main>
       <Footer />
     </main>
